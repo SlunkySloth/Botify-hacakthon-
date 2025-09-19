@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <title>AI PPT Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom animations and enhancements */
+    .gradient-bg {
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    }
+    
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+    }
+    
+    .template-card {
+      transition: all 0.2s ease;
+    }
+    
+    .template-card:hover {
+      transform: scale(1.02);
+    }
+    
+    .coin-icon {
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(45deg, #fbbf24, #f59e0b);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 10px;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4);
+    }
+    
+    .credits-button {
+      background: linear-gradient(90deg, #1f2937, #374151, #1f2937);
+      border: 1px solid #374151;
+    }
+    
+    .export-button {
+      background: linear-gradient(90deg, #059669, #047857, #059669);
+      border: 1px solid #047857;
+    }
+    
+    .glassmorphism {
+      background: rgba(31, 41, 55, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(75, 85, 99, 0.3);
+    }
+    
+    .input-focus {
+      transition: all 0.2s ease;
+    }
+    
+    .input-focus:focus {
+      ring: 2px;
+      ring-color: #3b82f6;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    
+    .template-preview {
+      background: linear-gradient(135deg, #374151 0%, #4b5563 50%, #374151 100%);
+      border: 2px solid #4b5563;
+    }
+  </style>
+</head>
+<body class="gradient-bg text-gray-100 min-h-screen">
+
+  <div class="max-w-5xl mx-auto py-8 px-4 space-y-8">
+    <!-- Header -->
+    <div class="relative">
+      <!-- Top Right Buttons -->
+      <div class="absolute top-0 right-0 flex items-center space-x-3">
+        <!-- Credits Button -->
+        <div class="credits-button rounded-lg px-3 py-2 flex items-center space-x-2">
+          <div class="coin-icon">₡</div>
+          <span class="text-sm font-medium">247</span>
+          <button class="bg-blue-600 hover:bg-blue-700 px-2 py-1 rounded text-xs font-medium transition-colors flex items-center space-x-1">
+            <div class="coin-icon">₡</div>
+            <span>Get More</span>
+          </button>
+        </div>
+        
+        <!-- Export Button -->
+        <button class="export-button rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:opacity-80 flex items-center space-x-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <span>Export</span>
+        </button>
+      </div>
+      
+      <!-- Title Section -->
+      <div class="text-center space-y-4 pt-12">
+        <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+          AI Presentation Generator
+        </h1>
+        <p class="text-gray-400 text-lg">Create stunning presentations with AI assistance</p>
+      </div>
+    </div>
+
+    <!-- Main Form Card -->
+    <div class="glassmorphism rounded-2xl p-8 space-y-8 card-hover">
+      
+      <!-- Company Selection -->
+      <div class="space-y-3">
+        <label class="block text-lg font-semibold text-gray-200">Company</label>
+        <select id="company" class="w-full bg-gray-700/80 border border-gray-600 rounded-xl p-4 text-gray-100 input-focus">
+          <option value="">Select a company</option>
+          <option value="OpenAI">OpenAI</option>
+          <option value="Google">Google</option>
+          <option value="Microsoft">Microsoft</option>
+          <option value="Tesla">Tesla</option>
+        </select>
+      </div>
+
+      <!-- Context Points -->
+      <div class="space-y-4">
+        <label class="block text-lg font-semibold text-gray-200">Context Points</label>
+        <div class="space-y-4">
+          <textarea id="context1" rows="3" placeholder="Context point 1 (min 20 words)" 
+            class="w-full bg-gray-700/80 border border-gray-600 rounded-xl p-4 text-gray-100 placeholder-gray-400 input-focus resize-none"></textarea>
+          <textarea id="context2" rows="3" placeholder="Context point 2 (min 20 words)" 
+            class="w-full bg-gray-700/80 border border-gray-600 rounded-xl p-4 text-gray-100 placeholder-gray-400 input-focus resize-none"></textarea>
+          <textarea id="context3" rows="3" placeholder="Context point 3 (optional)" 
+            class="w-full bg-gray-700/80 border border-gray-600 rounded-xl p-4 text-gray-100 placeholder-gray-400 input-focus resize-none"></textarea>
+        </div>
+      </div>
+
+      <!-- Include Options -->
+      <div class="space-y-4">
+        <label class="block text-lg font-semibold text-gray-200">Include Options</label>
+        <div class="grid grid-cols-2 gap-4">
+          <label class="flex items-center space-x-3 bg-gray-700/50 p-4 rounded-xl cursor-pointer hover:bg-gray-700/70 transition-colors">
+            <input type="checkbox" id="aiNews" class="w-5 h-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
+            <span class="font-medium">AI News Integration</span>
+          </label>
+          <label class="flex items-center space-x-3 bg-gray-700/50 p-4 rounded-xl cursor-pointer hover:bg-gray-700/70 transition-colors">
+            <input type="checkbox" id="companyInsight" class="w-5 h-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
+            <span class="font-medium">Company Insights</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Template Selection -->
+      <div class="space-y-4">
+        <label class="block text-lg font-semibold text-gray-200">Choose Template</label>
+        <div class="grid grid-cols-3 gap-6">
+          <!-- Classic Template -->
+          <label class="cursor-pointer template-card">
+            <input type="radio" name="template" value="classic" class="hidden peer">
+            <div class="bg-gray-700/80 rounded-xl border-2 border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-900/30 p-4 transition-all">
+              <div class="template-preview rounded-lg mb-3 h-32 flex items-center justify-center">
+                <div class="text-center space-y-2">
+                  <div class="w-12 h-2 bg-gray-400 rounded mx-auto"></div>
+                  <div class="w-8 h-1 bg-gray-500 rounded mx-auto"></div>
+                  <div class="w-10 h-1 bg-gray-500 rounded mx-auto"></div>
+                  <div class="grid grid-cols-2 gap-1 mt-3">
+                    <div class="w-full h-4 bg-gray-500 rounded"></div>
+                    <div class="w-full h-4 bg-gray-500 rounded"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="font-semibold text-center text-gray-200">Classic</p>
+              <p class="text-xs text-gray-400 text-center mt-1">Professional & Clean</p>
+            </div>
+          </label>
+          
+          <!-- General Template -->
+          <label class="cursor-pointer template-card">
+            <input type="radio" name="template" value="general" class="hidden peer">
+            <div class="bg-gray-700/80 rounded-xl border-2 border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-900/30 p-4 transition-all">
+              <div class="template-preview rounded-lg mb-3 h-32 flex items-center justify-center">
+                <div class="text-center space-y-2">
+                  <div class="w-16 h-3 bg-blue-400 rounded mx-auto"></div>
+                  <div class="space-y-1">
+                    <div class="w-12 h-1 bg-gray-400 rounded mx-auto"></div>
+                    <div class="w-10 h-1 bg-gray-400 rounded mx-auto"></div>
+                    <div class="w-14 h-1 bg-gray-400 rounded mx-auto"></div>
+                  </div>
+                  <div class="w-8 h-8 bg-blue-400 rounded-full mx-auto mt-2"></div>
+                </div>
+              </div>
+              <p class="font-semibold text-center text-gray-200">General</p>
+              <p class="text-xs text-gray-400 text-center mt-1">Modern & Versatile</p>
+            </div>
+          </label>
+          
+          <!-- Business Template -->
+          <label class="cursor-pointer template-card">
+            <input type="radio" name="template" value="business" class="hidden peer">
+            <div class="bg-gray-700/80 rounded-xl border-2 border-gray-600 peer-checked:border-blue-500 peer-checked:bg-blue-900/30 p-4 transition-all">
+              <div class="template-preview rounded-lg mb-3 h-32 flex items-center justify-center">
+                <div class="text-center space-y-2">
+                  <div class="w-14 h-2 bg-green-400 rounded mx-auto"></div>
+                  <div class="grid grid-cols-3 gap-1">
+                    <div class="h-6 bg-gray-400 rounded"></div>
+                    <div class="h-8 bg-gray-500 rounded"></div>
+                    <div class="h-4 bg-gray-400 rounded"></div>
+                  </div>
+                  <div class="flex justify-between">
+                    <div class="w-4 h-1 bg-gray-500 rounded"></div>
+                    <div class="w-4 h-1 bg-gray-500 rounded"></div>
+                    <div class="w-4 h-1 bg-gray-500 rounded"></div>
+                  </div>
+                </div>
+              </div>
+              <p class="font-semibold text-center text-gray-200">Business</p>
+              <p class="text-xs text-gray-400 text-center mt-1">Corporate & Formal</p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Number of Slides -->
+      <div class="space-y-3">
+        <label class="block text-lg font-semibold text-gray-200">Number of Slides</label>
+        <select id="slideCount" class="w-full bg-gray-700/80 border border-gray-600 rounded-xl p-4 text-gray-100 input-focus">
+          <option value="3" selected>3 slides</option>
+          <option value="4">4 slides</option>
+          <option value="5">5 slides</option>
+          <option value="6">6 slides</option>
+          <option value="7">7 slides</option>
+        </select>
+      </div>
+
+      <!-- Generate Button -->
+      <button id="generateBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-semibold text-lg transition-all card-hover">
+        ✨ Generate Presentation
+      </button>
+    </div>
+
+    <!-- Output Section -->
+    <div id="output" class="hidden glassmorphism rounded-2xl p-8 space-y-6 card-hover">
+      <h2 class="text-2xl font-bold text-gray-200">Generated Presentation</h2>
+      <div id="preview" class="space-y-4 text-gray-300"></div>
+      <a id="downloadLink" href="#" class="inline-block bg-green-600 hover:bg-green-700 px-6 py-3 rounded-xl text-white font-medium transition-colors">
+        📥 Download PPT
+      </a>
+    </div>
+
+    <!-- History Section -->
+    <div id="history" class="glassmorphism rounded-2xl p-8 space-y-6 card-hover">
+      <h2 class="text-2xl font-bold text-gray-200">Recent History</h2>
+      <div id="historyList" class="space-y-4 text-gray-300"></div>
+    </div>
+  </div>
+
+  <script>
+    async function loadHistory() {
+      try {
+        const res = await fetch("/api/history");
+        if (res.ok) {
+          const data = await res.json();
+          const list = document.getElementById("historyList");
+          list.innerHTML = "";
+          
+          if (data.length === 0) {
+            list.innerHTML = '<p class="text-gray-500 text-center py-4">No presentations generated yet</p>';
+            return;
+          }
+          
+          data.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "flex justify-between items-center bg-gray-700/60 p-4 rounded-xl hover:bg-gray-700/80 transition-colors";
+            div.innerHTML = `
+              <div class="flex-1">
+                <p class="font-semibold text-white text-lg">${item.company}</p>
+                <p class="text-sm text-gray-400">${item.template} template • ${item.slideCount} slides</p>
+                <p class="text-xs text-gray-500 mt-1">${new Date(item.created_at || Date.now()).toLocaleDateString()}</p>
+              </div>
+              <a href="${item.download_url}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                Download
+              </a>
+            `;
+            list.appendChild(div);
+          });
+        }
+      } catch (error) {
+        console.error('Error loading history:', error);
+        document.getElementById("historyList").innerHTML = '<p class="text-red-400 text-center py-4">Error loading history</p>';
+      }
+    }
+
+    document.getElementById("generateBtn").addEventListener("click", async () => {
+      const company = document.getElementById("company").value;
+      const context1 = document.getElementById("context1").value;
+      const context2 = document.getElementById("context2").value;
+      const context3 = document.getElementById("context3").value;
+      const aiNews = document.getElementById("aiNews").checked;
+      const companyInsight = document.getElementById("companyInsight").checked;
+      const template = document.querySelector("input[name='template']:checked")?.value;
+      const slideCount = document.getElementById("slideCount").value;
+
+      if (!company || !context1 || !context2 || !template) {
+        alert("Please fill in company, both required context points, and select a template!");
+        return;
+      }
+
+      if (context1.split(' ').length < 20 || context2.split(' ').length < 20) {
+        alert("Context points must be at least 20 words each!");
+        return;
+      }
+
+      const button = document.getElementById("generateBtn");
+      const originalText = button.innerHTML;
+      button.innerHTML = "⏳ Generating...";
+      button.disabled = true;
+
+      try {
+        const response = await fetch("/api/generate_ppt", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            company, context1, context2, context3,
+            aiNews, companyInsight,
+            template, slideCount
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          document.getElementById("preview").innerHTML = `
+            <div class="bg-gray-700/60 p-6 rounded-xl space-y-3">
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <p class="text-gray-400 text-sm">Company</p>
+                  <p class="font-semibold text-white">${company}</p>
+                </div>
+                <div>
+                  <p class="text-gray-400 text-sm">Template</p>
+                  <p class="font-semibold text-white">${template}</p>
+                </div>
+                <div>
+                  <p class="text-gray-400 text-sm">Slides</p>
+                  <p class="font-semibold text-white">${slideCount}</p>
+                </div>
+                <div>
+                  <p class="text-gray-400 text-sm">Features</p>
+                  <p class="font-semibold text-white">
+                    ${aiNews ? 'AI News ✓' : ''} ${companyInsight ? 'Company Insights ✓' : ''}
+                  </p>
+                </div>
+              </div>
+            </div>
+          `;
+          document.getElementById("downloadLink").href = data.download_url;
+          document.getElementById("output").classList.remove("hidden");
+          loadHistory();
+        } else {
+          alert("Failed to generate presentation. Please try again.");
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert("An error occurred. Please try again.");
+      } finally {
+        button.innerHTML = originalText;
+        button.disabled = false;
+      }
+    });
+
+    // Load history on page load
+    loadHistory();
+  </script>
+</body>
+</html>
